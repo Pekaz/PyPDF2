@@ -33,15 +33,19 @@ __author_email__ = "biziqe@mathieu.fenniak.net"
 
 
 import sys
-import builtins
+
+try:
+    import __builtin__ as builtins
+except ImportError:  # Py3
+    import builtins
 
 
 xrange_fn = getattr(builtins, "xrange", range)
 _basestring = getattr(builtins, "basestring", str)
 
-bytes_type = type(bytes())  # Works the same in Python 2.X and 3.X
+bytes_type = type(bytes()) # Works the same in Python 2.X and 3.X
 string_type = getattr(builtins, "unicode", str)
-int_types = (int, )
+int_types = (int, long) if sys.version_info[0] < 3 else (int,)
 
 
 # Make basic type tests more consistent
@@ -241,7 +245,10 @@ else:
 
 
 def u_(s):
-    return s
+    if sys.version_info[0] < 3:
+        return unicode(s, 'unicode_escape')
+    else:
+        return s
 
 
 def str_(b):
