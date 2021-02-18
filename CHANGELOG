@@ -1,4 +1,20 @@
-﻿Version 1.26.0, 2016-05-18
+﻿Version 1.26.2, 2021-02-18
+--------------------------
+
+- Pekaz custom update
+
+- change encoding to chardet for auto detecting
+
+
+Version 1.26.1, 2021-02-04
+--------------------------
+
+- Pekaz custom update
+
+- Add utf-8 encoding
+
+
+Version 1.26.0, 2016-05-18
 --------------------------
 
  - NOTE: Active maintenance on PyPDF2 is resuming after a hiatus
