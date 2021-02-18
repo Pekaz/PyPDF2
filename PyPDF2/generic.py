@@ -44,7 +44,6 @@ from . import utils
 import decimal
 import codecs
 import sys
-import chardet
 #import debugging
 
 ObjectPrefix = b_('/<[tf(n%')
@@ -478,12 +477,16 @@ class NameObject(str, PdfObject):
         name = stream.read(1)
         if name != NameObject.surfix:
             raise utils.PdfReadError("name read error")
-        name += utils.readUntilRegex(stream, NameObject.delimiterPattern, ignore_eof=True)
+        name += utils.readUntilRegex(stream, NameObject.delimiterPattern,
+            ignore_eof=True)
         if debug: print(name)
         try:
-            encoding = chardet.detect(name)['encoding']
-            return NameObject(name.decode(encoding if encoding else 'utf-8'))
+            return NameObject(name.decode('utf-8'))
         except (UnicodeEncodeError, UnicodeDecodeError) as e:
+            try:
+                return NameObject(name.decode('cp949'))
+            except (UnicodeEncodeError, UnicodeDecodeError) as e:
+                pass
             # Name objects should represent irregular characters
             # with a '#' followed by the symbol's hex number
             if not pdf.strict:
