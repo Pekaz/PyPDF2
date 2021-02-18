@@ -481,7 +481,8 @@ class NameObject(str, PdfObject):
         name += utils.readUntilRegex(stream, NameObject.delimiterPattern, ignore_eof=True)
         if debug: print(name)
         try:
-            return NameObject(name.decode(chardet.detect(name)['encoding']))
+            encoding = chardet.detect(name)['encoding']
+            return NameObject(name.decode(encoding if encoding else 'utf-8'))
         except (UnicodeEncodeError, UnicodeDecodeError) as e:
             # Name objects should represent irregular characters
             # with a '#' followed by the symbol's hex number
