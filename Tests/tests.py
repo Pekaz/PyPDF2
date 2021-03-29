@@ -32,7 +32,7 @@ class PdfReaderTestCases(unittest.TestCase):
             ipdf_p1_text = ipdf_p1.extractText().replace('\n', '')
 
             # Compare the text of the PDF to a known source
-            self.assertEqual(ipdf_p1_text.encode('utf-8', errors='ignore'), pdftext,
+            self.assertEqual(ipdf_p1_text, pdftext,
                 msg='PDF extracted text differs from expected value.\n\nExpected:\n\n%r\n\nExtracted:\n\n%r\n\n'
                     % (pdftext, ipdf_p1_text.encode('utf-8', errors='ignore')))
 
